@@ -1,15 +1,38 @@
-import sqlite3
-from typing import final
 
-con = sqlite3.connect("recipies.db")
+import sqlite3
+
+con = sqlite3.connect(":memory:")
 cur = con.cursor()
+
+cur.execute('''CREATE Table style (
+              ID INT PRIMARY KEY     NOT NULL,
+              style_name text NOT NULL
+              )''')
+
+cur.execute('''CREATE TABLE recipie (
+             ID INT PRIMARY KEY     NOT NULL,
+             r_name   text NOT NULL,
+             calories real
+             )''')
+
+cur.execute("""CREATE TABLE Ingrediants (
+              ID INT PRIMARY KEY     NOT NULL,	
+ 	          Name     text NOT NULL,
+ 	          Price    real,
+ 	          Amount   real,
+ 	         Measurement   text 
+ 	        )""")
+
+con.commit
 
 class recipebook:
     def __init__(self):
-        pass
+        self.menu_option = int(input("what is your selection?"))
 
     def menu():
+        print(" ")
         print("Welcome to Your Cheif Recipie Table, Please Select the following:")
+        print(" ")
         print ("0. Exit Program")
         print("1. Show all Recipes")
         print("2. Show all Base")
@@ -22,135 +45,102 @@ class recipebook:
         print("9. Modify Ingrediant")
 
     def option_0():
-        pass
+        print(" ")
+        print("Thank you for trying out my program")
+        print(" ")
+        con.close
 
     def option_1():
         try:
-            #cur.execute("SELECT * FROM recipie")
-            pass
+            cur.execute("SELECT * FROM recipie")
+            con.commit
         except:
-            print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
-            # cur.execute('''CREATE Table recipie (
-        #      style_name text
-        #      )''')
-            pass
-        pass
+            print (" Oh, we cannot seem to find your recipie please insert a recipie into the list!")
+  
 
     def option_2():
         try:
-            #cur.execute("SELECT * FROM style")
-            pass
+            cur.execute("SELECT * FROM style")
+            con.commit()
         except:
-            print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
-            # cur.execute('''CREATE TABLE style (
-        #      style_name text
-        #      )''')
-            pass
-        pass
+            print (" Oh, we cannot seem to find your Base please insert the name of the Base for your recipie into the list!")
 
     def option_3():
-        #if table not found 
-        # cur.execute('''CREATE TABLE style (
-        #      style_name text
-        #      )''')
-        #else look below
-
-        #stle_name = input("What is the style you want to put in:")
-        # Replace meat with user style prefrence
-        #cur.execute("INSERT INTO style values ('Meat')")
-        pass
+        try:
+            id_num = int(input("Whats the ID #:"))
+            s_name = input("What is the Style name: ")
+            cur.execute("INSERT INTO style (style_name) values ('{}');").format(id_num,s_name)
+            con.commit
+        except:
+            print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
+        
     def option_4():
+        
         pass
+
     def option_5():
-        #if table not found
-        # Connect One table to another with primary key
-        # cur.execute('''CREATE TABLE recipie (
-#             Rec_Id 
-#             r_name   text
-#             Calories real
-#             styleId
-#             )''')
-        #else look below
+        try:
+            id_num = int(input("Whats the ID #:"))
+            re_name = input("What is the recipe's name: ")
+            calo = int(input("What is the recipe's calories: "))
+            cur.execute("INSERT INTO style (r_name, calories) values ('{}','{}');").format(id_num,re_name, calo)
+            con.commit
+        except:
+            print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
 
-        #stle_name = input("What is the Recipie you want to put in:")
-        # Replace meat with user style prefrence
-        #cur.execute("INSERT INTO recipie values ('Meat')")
-
-        # con.commit()
-        pass
+        
     def option_6():
         pass
-    def option_7():
-         #if table not found 
-        # cur.execute("""CREATE TABLE Ingrediants (
-# 	          Ing_ID		
-# 	          Name     text
-# 	          Price    real
-# 	          Amount   real
-# 	     Measurement   text
-# 	        Recipe ID  
-# 	)""")
-        #else look below
 
-        #stle_name = input("What is the style you want to put in:")
-        # Replace meat with user style prefrence
-        #cur.execute("INSERT INTO style values ('Meat')")
-        pass
+    def option_7():
+        try:
+            id_num = int(input("Whats the ID #:"))
+            in_name = input("What is the ingrediants's name: ")
+            pri = float(input("What is the ingrediants's prince: "))
+            amo = float(input("How much do you need: "))
+            meas = input("What is the measurment: ")
+            cur.execute("INSERT INTO style (r_name, calories) values ('{}','{}','{}','{}');").format(id_num,in_name, pri, amo, meas)
+            con.commit
+        except:
+            print (" Oh, we cannot seem to find your ingrediants, please try again!")
+        
     def option_8():
+
         pass
+
     def option_9():
+
         pass
 
 
 recipebook.menu()
 menu_option = int(input(""))
 
-while menu_option != 0:
-    print()
+while recipebook.menu() != 0:
+    if menu_option == 1:
+        recipebook.option_1()
+    elif menu_option == 2:
+        recipebook.option_2()
+    elif menu_option == 3:
+        recipebook.option_3()
+    elif menu_option == 4:
+        recipebook.option_4()
+    elif menu_option == 5:
+        recipebook.option_5()
+    elif menu_option == 6:
+        recipebook.option_6()
+    elif menu_option == 7:
+        recipebook.option_7()
+    elif menu_option == 8:
+        recipebook.option_8()
+    elif menu_option == 9:
+        recipebook.option_9()
+    else:
+        recipebook.option_0()
+        break
+
     recipebook.menu()
-
-
-
-
-
-
-
-
-
-# cur.execute('''CREATE TABLE style (
-#             styleId 
-#             base_name text
-#             )''')
-
-
-# cur.execute('''CREATE TABLE recipie (
-#             Rec_Id 
-#             r_name   text
-#             Calories real
-#             styleId
-#             )''')
-
-# cur.execute("""CREATE TABLE Ingrediants (
-# 	          Ing_ID		
-# 	          Name     text
-# 	          Price    real
-# 	          Amount   real
-# 	     Measurement   text
-# 	        Recipe ID  
-# 	)""")
-
-# cur.execute("INSERT INTO style values ('Meat')")
-# cur.execute("INSERT INTO style values ('Fish')")
-# cur.execute("INSERT INTO style values ('Sweets')")
-# cur.execute("INSERT INTO style values ('Veggies')")
-# cur.execute("INSERT INTO style values ('Juice')")
-# cur.execute("INSERT INTO style values ('Hot Drinks')")
-
-# cur.execute("SELECT * FROM style")
-
+    menu_option = int(input(""))
+    
 #  print (recipebook)
 # print(cur.fetchall())
-
-# con.commit()
-
-# con.close()
