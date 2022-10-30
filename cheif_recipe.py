@@ -53,6 +53,7 @@ class recipebook:
     def option_1():
         try:
             cur.execute("SELECT * FROM recipie")
+            print(cur.fetchall())
             con.commit
         except:
             print (" Oh, we cannot seem to find your recipie please insert a recipie into the list!")
