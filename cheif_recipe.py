@@ -1,4 +1,4 @@
-
+# darcy merilan database... please note this is a work in progress and does not illustrate my full understanding of python and sql
 import sqlite3
 
 con = sqlite3.connect(":memory:")
@@ -62,6 +62,7 @@ class recipebook:
         try:
             cur.execute("SELECT * FROM style")
             con.commit()
+            print(cur.fetchall())
         except:
             print (" Oh, we cannot seem to find your Base please insert the name of the Base for your recipie into the list!")
 
@@ -69,13 +70,15 @@ class recipebook:
         try:
             id_num = int(input("Whats the ID #:"))
             s_name = input("What is the Style name: ")
-            cur.execute("INSERT INTO style (style_name) values ('{}');").format(id_num,s_name)
+            cur.execute("INSERT INTO style (ID, style_name) values ('{}');").format(id_num,s_name)
             con.commit
+            print(cur.fetchall())
         except:
             print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
         
     def option_4():
-        
+        # This is the delete option, i am trying to solve how to delete trough a user input
+        #cur.execute("Delete From style where ('{}');")
         pass
 
     def option_5():
@@ -83,13 +86,16 @@ class recipebook:
             id_num = int(input("Whats the ID #:"))
             re_name = input("What is the recipe's name: ")
             calo = int(input("What is the recipe's calories: "))
-            cur.execute("INSERT INTO style (r_name, calories) values ('{}','{}');").format(id_num,re_name, calo)
+            cur.execute("INSERT INTO recipie (ID , r_name, calories) values ('{}','{}');").format(id_num,re_name, calo)
             con.commit
+            print(cur.fetchall())
         except:
             print (" Oh, we cannot seem to find your recipie please insert the name of the recipie below to list it!")
 
         
     def option_6():
+        # This is the delete option, i am trying to solve how to delete trough a user input
+        #cur.execute("Delete From recipie where ('{}');")
         pass
 
     def option_7():
@@ -99,17 +105,23 @@ class recipebook:
             pri = float(input("What is the ingrediants's prince: "))
             amo = float(input("How much do you need: "))
             meas = input("What is the measurment: ")
-            cur.execute("INSERT INTO style (r_name, calories) values ('{}','{}','{}','{}');").format(id_num,in_name, pri, amo, meas)
+            cur.execute("INSERT INTO Ingrediants (ID ,Name, Price,Amount,Measurement)values ('{}','{}','{}','{}','{}');").format(id_num,in_name, pri, amo, meas)
             con.commit
+            print(cur.fetchall())
         except:
             print (" Oh, we cannot seem to find your ingrediants, please try again!")
         
     def option_8():
-
+        # This is the delete option, i am trying to solve how to delete trough a user input
+        #try:
+        #    del_ing = input("Please delete an ingrediant from the recipebook: ")
+        #    cur.execute("Delete From Ingrediants where ('{}');")
+        #except:
+        #    print ("Can Not Compute, Please try again")
         pass
 
     def option_9():
-
+        # This is the modify option, to be updated later
         pass
 
 
